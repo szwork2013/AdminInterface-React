@@ -1,38 +1,41 @@
 'use strict';
 
 var React = require('react/addons');
-
-require('../../styles/ToolBar.less');
+var $ = jquery = jQuery = require('jquery');
 var Navbar  = require('react-bootstrap/Navbar');
 var Nav     = require('react-bootstrap/Nav');
 var NavItem = require('react-bootstrap/NavItem');
 
+require('../../styles/ToolBar.less');
+
+// sub modules
+var Content = require('./Content');
+
 var ToolBar = React.createClass({
+  getMenus: function(){
+    return [
+        { link:"#",label:"Content" },
+        { link:"#",label:"Appearance" },
+        { link:"#",label:"People" },
+        { link:"#",label:"Modules" },
+        { link:"#",label:"Settings" },         
+        { link:"#",label:"Reports" },
+        { link:"#",label:"Help" }
+    ];
+  },
   getInitialState: function() {
      return {
         visible: false
      };
   },  
   render: function () {
-    var data = [
-          { link:"#",label:"Link1" },
-          { link:"#",label:"Link2" }
-        ];
-    
-    var navbar = null;    
+    var menus = this.getMenus();
+    var navbar = null;
     if ( this.props.visible ) { // disable the navbar if we no longer wish to display it!
-      var navItems = [];
-      var count = 0;
-      data.forEach(function(item) {
-         navItems.push( <NavItem key={count} href={item.link}>{item.label}</NavItem> );
-         count++;
-      });
-            
-      //final rendered component
       navbar = (
         <Navbar id="ToolBar">
           <Nav>
-             {navItems}
+             <Content index={0} link={menus[0].link} label={menus[0].label} />
           </Nav>
         </Navbar>
       );
@@ -43,4 +46,3 @@ var ToolBar = React.createClass({
 });
 
 module.exports = ToolBar; 
-

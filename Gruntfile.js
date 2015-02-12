@@ -60,8 +60,7 @@ module.exports = function (grunt) {
       options: {
         delay: 500
       },
-      dev: {
-        app: 'Google Chrome',        
+      dev: { 
         path: 'http://localhost:<%= connect.options.port %>/webpack-dev-server/'
       },
       dist: {
@@ -76,6 +75,14 @@ module.exports = function (grunt) {
     },
 
     copy: {
+      dev: {
+        files: [
+          {
+            src: [__dirname + '/node_modules/bootstrap/dist/css/bootstrap.min.css' ],
+            dest: '<%= pkg.src %>/styles/vendor/bootstrap.min.css'
+          }
+        ]
+      },
       dist: {
         files: [
           // includes files within path
@@ -91,7 +98,7 @@ module.exports = function (grunt) {
             expand: true,
             src: ['<%= pkg.src %>/images/*'],
             dest: '<%= pkg.dist %>/images/'
-          },
+          }
         ]
       }
     },
@@ -114,6 +121,7 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
+      'copy:dev',
       'open:dev',
       'webpack-dev-server'
     ]);

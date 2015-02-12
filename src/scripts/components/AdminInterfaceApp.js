@@ -24,7 +24,7 @@ var AdminInterfaceApp = React.createClass({
     return (
        <div>
           <ToolBar visible={this.state.visible} />
-          <a href="#" onClick={this.toggle}>Activate</a>
+          <a href="#" onClick={this.toggle}>..toggle..</a>
        </div>
     );
   }
