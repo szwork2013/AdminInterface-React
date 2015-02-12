@@ -15,5 +15,5 @@ var Routes = (
 
 // Here is where all the stuff happens
 Router.run(Routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('_wgp_toolbar'));
+  React.render(<Handler />, document.getElementById('_wgp_toolbar'));
 });
