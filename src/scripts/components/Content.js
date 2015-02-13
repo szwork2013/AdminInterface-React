@@ -3,16 +3,14 @@
 var React = require('react/addons');
 
 var DropdownButton = require('react-bootstrap/DropdownButton');
-var Jumbotron = require('react-bootstrap/Jumbotron');
+var Panel = require('react-bootstrap/Panel');
+var Modal = require('react-bootstrap/Modal');
 var MenuItem = require('react-bootstrap/MenuItem');
 var NavItem = require('react-bootstrap/NavItem');
 
 require('../../styles/Content.less');
 
-var WGP
-
 var Content = React.createClass({
-  mixins: [WGP],
   propTypes: {
      jumbotronId: React.PropTypes.string.isRequired
   },
@@ -40,9 +38,9 @@ var Content = React.createClass({
   },
   handleClick: function(title){
     var jumbotron = (
-      <Jumbotron>
-        <h3>{title}</h3>
-      </Jumbotron>        
+      <Panel id="centerContainer" className="center-block" header={title}>
+         Panel content
+      </Panel>
     );
     React.render(jumbotron, document.getElementById(this.props.jumbotronId));
   }  

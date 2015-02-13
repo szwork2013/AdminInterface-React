@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react/addons');
-var $ = jquery = jQuery = require('jquery');
 var Navbar  = require('react-bootstrap/Navbar');
 var Nav     = require('react-bootstrap/Nav');
 var NavItem = require('react-bootstrap/NavItem');

@@ -53,6 +53,12 @@ module.exports = {
   },
 
   plugins: [
+    // Added this to make sure jquery and its variations are available in every module
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "windows.jQuery": "jquery"
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]

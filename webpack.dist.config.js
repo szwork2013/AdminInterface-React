@@ -13,7 +13,7 @@ module.exports = {
   output: {
     publicPath: '/assets/',
     path: '/opt/webgui/assets/',
-    filename: 'main.js'
+    filename: 'AdminInterface.js'
   },
 
   debug: false,

@@ -5,7 +5,7 @@ describe('AddContent', function () {
   var AddContent, component;
 
   beforeEach(function () {
-    AddContent = require('../../../src/scripts/components/Content/AddContent.js');
+    AddContent = require('../../../../src/scripts/components/Content/AddContent.js');
     component = React.createElement(AddContent);
   });
 

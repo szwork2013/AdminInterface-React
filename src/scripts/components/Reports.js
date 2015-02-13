@@ -10,12 +10,7 @@ var Reports = React.createClass({
   propTypes: {
     jumbotronId: React.PropTypes.string.isRequired
   },
-  getMenus: function(){
-     return [
-     ];
-  },
   render: function () {
-    var menus = this.getMenus();
     return (     
       <NavItem onClick={this.handleClick}>
         {this.props.label}

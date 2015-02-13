@@ -14,10 +14,16 @@ module.exports = function (config) {
     webpack: {
       cache: true,
       module: {
-        loaders: [{
+        loaders: [
+        {
           test: /\.css$/,
           loader: 'style!css'
-        }, {
+        },
+        {
+          test: /\.less/,
+          loader: 'style-loader!css-loader!less-loader'        
+        },        
+        {
           test: /\.gif/,
           loader: 'url-loader?limit=10000&mimetype=image/gif'
         }, {

@@ -2,7 +2,7 @@
 
 var React = require('react/addons');
 
-require('../../styles/AddContent.less');
+require('../../../styles/Content/AddContent.less');
 
 var AddContent = React.createClass({
   render: function () {
