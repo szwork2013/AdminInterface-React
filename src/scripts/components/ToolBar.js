@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
+var cx = React.addons.classSet;
 var Navbar  = require('react-bootstrap/Navbar');
 var Nav     = require('react-bootstrap/Nav');
 var NavItem = require('react-bootstrap/NavItem');
@@ -15,6 +16,7 @@ var Modules = require('./Modules');
 var Settings = require('./Settings');
 var Reports = require('./Reports');
 var Help = require('./Help');
+var Tray = require('./Tray');
 
 var ToolBar = React.createClass({
   propTypes: {
@@ -40,14 +42,18 @@ var ToolBar = React.createClass({
      return {
         visible: false
      };
-  },  
+  },
   render: function () {
+    var cssClasses = cx({
+      'navbar-static-top' : true,
+      'navbar-inverse' : true
+    });      
     var menus = this.getMenus();
     var navbar = null;
     if ( this.props.visible ) { // disable the navbar if we no longer wish to display it!
       navbar = (
-        <div>
-          <Navbar id="ToolBar">
+        <div className="-wgp-fixed-top">
+          <Navbar id="ToolBar" className={cssClasses}>
             <Nav>
                <Content index={0} link={menus[0].link} label={menus[0].label} jumbotronId={this.props.jumbotronId} /> 
                <Appearance index={1} link={menus[1].link} label={menus[1].label} jumbotronId={this.props.jumbotronId} />
@@ -58,6 +64,7 @@ var ToolBar = React.createClass({
                <Help index={6} link={menus[6].link} label={menus[6].label} jumbotronId={this.props.jumbotronId} />
             </Nav>
           </Navbar>
+          <Tray />
           <div id={this.props.jumbotronId}></div>   
         </div>
       );
