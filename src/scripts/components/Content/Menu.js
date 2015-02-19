@@ -11,11 +11,11 @@ require('../../../styles/Content/Menu.less');
 var Menu = React.createClass({
   propTypes: {
      flux: React.PropTypes.object.isRequired, // This needs to be an instance of ...Fluxxor.Flux(...
-     jumbotronId: React.PropTypes.string.isRequired
+     contentsDialog: React.PropTypes.string.isRequired
   },
   render: function () {
     return (
-      <ModalTrigger modal={<ContentPanel flux={this.props.flux} title="Contents" />}>
+      <ModalTrigger modal={<ContentPanel flux={this.props.flux} title={this.props.label} />}>
          <NavItem>{this.props.label}</NavItem>
       </ModalTrigger>
     );

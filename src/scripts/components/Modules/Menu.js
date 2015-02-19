@@ -8,7 +8,7 @@ require('../../../styles/Modules/Menu.less');
 
 var Menu = React.createClass({
   propTypes: {
-    jumbotronId: React.PropTypes.string.isRequired
+    contentsDialog: React.PropTypes.string.isRequired
   },
   render: function () {
     return (     
@@ -23,7 +23,7 @@ var Menu = React.createClass({
         <h1>Extend site functionality.</h1>
       </Jumbotron>        
     );
-    React.render(jumbotron, document.getElementById(this.props.jumbotronId));
+    React.render(jumbotron, document.getElementById(this.props.contentsDialog));
   }  
 });
 

@@ -8,7 +8,7 @@ require('../../../styles/Help/Menu.less');
 
 var Help = React.createClass({
   propTypes: {
-    jumbotronId: React.PropTypes.string.isRequired
+    contentsDialog: React.PropTypes.string.isRequired
   },
   render: function () {
     return (     
@@ -23,7 +23,7 @@ var Help = React.createClass({
         <h1>Reference for usage, configuration and modules.</h1>
       </Jumbotron>        
     );
-    React.render(jumbotron, document.getElementById(this.props.jumbotronId));
+    React.render(jumbotron, document.getElementById(this.props.contentsDialog));
   }  
 });
 

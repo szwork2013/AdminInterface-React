@@ -15,9 +15,11 @@ var Tray = React.createClass({
     });   
     return (
       <Navbar id="Tray" className={cssClasses}>
-        <Nav>
+        <Nav className="left">
           <NavItem>Add Content</NavItem>
           <NavItem>Find Content</NavItem>
+        </Nav>
+        <Nav className="right">
           <NavItem>Turn Admin Off</NavItem>
         </Nav>
       </Navbar>

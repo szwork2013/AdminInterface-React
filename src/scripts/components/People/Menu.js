@@ -8,7 +8,7 @@ require('../../../styles/People/Menu.less');
 
 var Menu = React.createClass({
   propTypes: {
-    jumbotronId: React.PropTypes.string.isRequired
+    contentsDialog: React.PropTypes.string.isRequired
   },
   render: function () {
     return (     
@@ -23,7 +23,7 @@ var Menu = React.createClass({
         <h1>Manage user accounts, groups and permissions.</h1>
       </Jumbotron>        
     );
-    React.render(jumbotron, document.getElementById(this.props.jumbotronId));
+    React.render(jumbotron, document.getElementById(this.props.contentsDialog));
   }  
 });
 

@@ -22,19 +22,23 @@ var flux = new Fluxxor.Flux({ ContentStore: new ContentStore() }, {});
 //});
 
 var AdminInterfaceApp = React.createClass({
+  propTypes: {
+     toggleLabel: React.PropTypes.string.isRequired
+  },  
   getInitialState: function() {
      return {visible: false};
-  },
+  },  
   toggle: function(){
       this.setState({
          visible: !this.state.visible
       });
   },
   render: function() {
+    // disable the navbar if we no longer wish to display it!
     return (
        <div>
-          <ToolBar visible={this.state.visible} flux={flux} />
-          <a href="#" onClick={this.toggle}>..toggle..</a>
+          {this.state.visible && <ToolBar flux={flux} />}
+          <a href="#" onClick={this.toggle}>{this.props.toggleLabel}</a>
        </div>
     );
   }

@@ -1,8 +1,39 @@
 /* Set variables here */
 @backgroundColor: #B3D4FC;
 @textColor: #ffffff;
+@paddingTop: .35em;
 
 #Tray {
   background-color: @backgroundColor;
+  height: 10px;
+  min-height: 2em;
+}
 
+#Tray div:first-child{
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#Tray ul.left{
+   padding-top: @paddingTop;
+   position: relative;
+   float: left; 
+}
+
+#Tray ul.right{
+   padding-top: @paddingTop;
+   padding-right: 0px;
+   position: relative;
+   float: right;
+}
+
+#Tray a{
+  padding: 0px;
+  padding-left: 1em;
+  margin: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 12px;
 }
