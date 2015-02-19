@@ -12,7 +12,7 @@ require('../../styles/main.css');
 var ToolBar = require('./ToolBar');
 
 // Flux implementation, see:  https://facebook.github.io/flux/  and http://fluxxor.com
-var ContentStore = require('./flux/stores/Content');
+var ContentStore = require('./Content/Store');
 var Fluxxor = require("fluxxor");
 var flux = new Fluxxor.Flux({ ContentStore: new ContentStore() }, {});
 //flux.on("dispatch", function(type, payload) {

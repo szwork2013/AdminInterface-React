@@ -4,9 +4,9 @@ var React = require('react/addons');
 var NavItem = require('react-bootstrap/NavItem');
 var Jumbotron = require('react-bootstrap/Jumbotron');
 
-require('../../styles/Help.less');
+require('../../../styles/Settings/Menu.less');
 
-var Help = React.createClass({
+var Menu = React.createClass({
   propTypes: {
     jumbotronId: React.PropTypes.string.isRequired
   },
@@ -20,12 +20,12 @@ var Help = React.createClass({
   handleClick: function(index){
     var jumbotron = (
       <Jumbotron>
-        <h1>Reference for usage, configuration and modules.</h1>
+        <h1>Administer settings.</h1>
       </Jumbotron>        
     );
     React.render(jumbotron, document.getElementById(this.props.jumbotronId));
   }  
 });
 
-module.exports = Help; 
+module.exports = Menu 
 

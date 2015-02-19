@@ -11,9 +11,9 @@ var Fluxxor = require("fluxxor");
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
-require('../../../styles/Panels/Main.less');
+require('../../../styles/Content/Panel.less');
 
-var Main = React.createClass({
+var Panel = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("ContentStore")],
   propTypes: {
      flux: React.PropTypes.object.isRequired
@@ -32,7 +32,7 @@ var Main = React.createClass({
   },  
   render: function() {
     return (
-      <Modal {...this.props} title={this.props.title} animation={false}>
+      <Modal {...this.props} title={this.props.title}> 
         <div className="modal-body">
           <TabbedArea defaultActiveKey={1}>
             {this.state.menus.map(function(menu,index){
@@ -50,5 +50,5 @@ var Main = React.createClass({
   }
 });
 
-module.exports = Main; 
+module.exports = Panel; 
 

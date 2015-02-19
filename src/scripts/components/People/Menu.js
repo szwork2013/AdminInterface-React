@@ -4,9 +4,9 @@ var React = require('react/addons');
 var NavItem = require('react-bootstrap/NavItem');
 var Jumbotron = require('react-bootstrap/Jumbotron');
 
-require('../../styles/People.less');
+require('../../../styles/People/Menu.less');
 
-var People = React.createClass({
+var Menu = React.createClass({
   propTypes: {
     jumbotronId: React.PropTypes.string.isRequired
   },
@@ -27,5 +27,5 @@ var People = React.createClass({
   }  
 });
 
-module.exports = People; 
+module.exports = Menu; 
 

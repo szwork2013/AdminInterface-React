@@ -9,13 +9,13 @@ var Jumbotron = require('react-bootstrap/Jumbotron');
 require('../../styles/ToolBar.less');
 
 // sub modules
-var Content = require('./Content');
-var Appearance = require('./Appearance');
-var People = require('./People');
-var Modules = require('./Modules');
-var Settings = require('./Settings');
-var Reports = require('./Reports');
-var Help = require('./Help');
+var Content = require('./Content/Menu');
+var Appearance = require('./Appearance/Menu');
+var People = require('./People/Menu');
+var Modules = require('./Modules/Menu');
+var Settings = require('./Settings/Menu');
+var Reports = require('./Reports/Menu');
+var Help = require('./Help/Menu');
 var Tray = require('./Tray');
 
 var ToolBar = React.createClass({
