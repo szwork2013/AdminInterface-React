@@ -11,6 +11,16 @@ require('../../styles/main.css');
 // Modules
 var ToolBar = require('./ToolBar');
 
+// Flux implementation, see:  https://facebook.github.io/flux/  and http://fluxxor.com
+var ContentStore = require('./flux/stores/Content');
+var Fluxxor = require("fluxxor");
+var flux = new Fluxxor.Flux({ ContentStore: new ContentStore() }, {});
+//flux.on("dispatch", function(type, payload) {
+//  if (console && console.log) {
+//    console.log("[Dispatch]", type, payload);
+//  }
+//});
+
 var AdminInterfaceApp = React.createClass({
   getInitialState: function() {
      return {visible: false};
@@ -23,7 +33,7 @@ var AdminInterfaceApp = React.createClass({
   render: function() {
     return (
        <div>
-          <ToolBar visible={this.state.visible} />
+          <ToolBar visible={this.state.visible} flux={flux} />
           <a href="#" onClick={this.toggle}>..toggle..</a>
        </div>
     );

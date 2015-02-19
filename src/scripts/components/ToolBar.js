@@ -19,7 +19,13 @@ var Help = require('./Help');
 var Tray = require('./Tray');
 
 var ToolBar = React.createClass({
+  getInitialState: function() {
+     return {
+        visible: false
+     };
+  },
   propTypes: {
+     flux: React.PropTypes.object.isRequired, // This needs to be an instance of ...Fluxxor.Flux(...
      jumbotronId: React.PropTypes.string
   },
   getDefaultProps: function () {
@@ -38,24 +44,19 @@ var ToolBar = React.createClass({
         { link:"#",label:"Help" }
     ];
   },
-  getInitialState: function() {
-     return {
-        visible: false
-     };
-  },
   render: function () {
     var cssClasses = cx({
       'navbar-static-top' : true,
       'navbar-inverse' : true
     });      
-    var menus = this.getMenus();
     var navbar = null;
     if ( this.props.visible ) { // disable the navbar if we no longer wish to display it!
+      var menus = this.getMenus();
       navbar = (
         <div className="-wgp-fixed-top">
           <Navbar id="ToolBar" className={cssClasses}>
             <Nav>
-               <Content index={0} link={menus[0].link} label={menus[0].label} jumbotronId={this.props.jumbotronId} /> 
+               <Content index={0} link={menus[0].link} label={menus[0].label} jumbotronId={this.props.jumbotronId} flux={this.props.flux} /> 
                <Appearance index={1} link={menus[1].link} label={menus[1].label} jumbotronId={this.props.jumbotronId} />
                <People index={2} link={menus[2].link} label={menus[2].label} jumbotronId={this.props.jumbotronId} />
                <Modules index={3} link={menus[3].link} label={menus[3].label} jumbotronId={this.props.jumbotronId} />

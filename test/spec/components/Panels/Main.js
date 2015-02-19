@@ -5,7 +5,7 @@ describe('Main', function () {
   var Main, component;
 
   beforeEach(function () {
-    Main = require('../../../src/scripts/components/Panels/Main.js');
+    Main = require('../../../../src/scripts/components/Panels/Main.js');
     component = React.createElement(Main);
   });
 
