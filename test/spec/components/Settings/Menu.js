@@ -5,7 +5,7 @@ describe('Settings', function () {
   var Settings, component;
 
   beforeEach(function () {
-    Settings = require('../../../src/scripts/components/Settings.js');
+    Settings = require('../../../../src/scripts/components/Settings/Menu.js');
     component = React.createElement(Settings);
   });
 

@@ -1,6 +1,5 @@
 'use strict';
 
-var React = require('react/addons');
 var Fluxxor = require("fluxxor");
 
 var Store = Fluxxor.createStore({
@@ -11,7 +10,6 @@ var Store = Fluxxor.createStore({
     ];
 
   },
-
   getState: function() {
     return {
       menus: this.menus

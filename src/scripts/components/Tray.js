@@ -9,6 +9,10 @@ var NavItem = require('react-bootstrap/NavItem');
 require('../../styles/Tray.less');
 
 var Tray = React.createClass({
+  propTypes: {
+     // This event disables the whole application
+     toggleVisibleEvnt: React.PropTypes.func.isRequired  
+  },  
   render: function () {
     var cssClasses = cx({
       'navbar-static-top' : true
@@ -20,7 +24,7 @@ var Tray = React.createClass({
           <NavItem>Find Content</NavItem>
         </Nav>
         <Nav className="right">
-          <NavItem>Turn Admin Off</NavItem>
+          <NavItem onClick={this.props.toggleVisibleEvnt}>Turn Admin Off</NavItem>
         </Nav>
       </Navbar>
       );

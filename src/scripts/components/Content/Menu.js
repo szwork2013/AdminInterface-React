@@ -15,7 +15,7 @@ var Menu = React.createClass({
   },
   render: function () {
     return (
-      <ModalTrigger modal={<ContentPanel flux={this.props.flux} title={this.props.label} />}>
+      <ModalTrigger modal={<ContentPanel {...this.props} />}>
          <NavItem>{this.props.label}</NavItem>
       </ModalTrigger>
     );

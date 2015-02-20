@@ -32,7 +32,7 @@ var Panel = React.createClass({
   },  
   render: function() {
     return (
-      <Modal id="wgp-content-panel" {...this.props} title={this.props.title}> 
+      <Modal id="wgp-content-panel" title={this.props.label} {...this.props}> 
         <div className="modal-body">
           <TabbedArea defaultActiveKey={1}>
             {this.state.menus.map(function(menu,index){

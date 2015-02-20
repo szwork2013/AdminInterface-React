@@ -49,7 +49,7 @@ var ToolBar = React.createClass({
       <div className="-wgp-fixed-top">
         <Navbar id="ToolBar" className={cssClasses}>
           <Nav style={{ float: "left" }}>
-             <Content index={0} link={menus[0].link} label={menus[0].label} contentsDialog={this.props.contentsDialog} flux={this.props.flux} /> 
+             <Content index={0} link={menus[0].link} label={menus[0].label} {...this.props} /> 
              <Appearance index={1} link={menus[1].link} label={menus[1].label} contentsDialog={this.props.contentsDialog} flux={this.props.flux} />
              <People index={2} link={menus[2].link} label={menus[2].label} contentsDialog={this.props.contentsDialog} flux={this.props.flux} />
              <Modules index={3} link={menus[3].link} label={menus[3].label} contentsDialog={this.props.contentsDialog} flux={this.props.flux} />
@@ -58,7 +58,7 @@ var ToolBar = React.createClass({
              <Help index={6} link={menus[6].link} label={menus[6].label} contentsDialog={this.props.contentsDialog} flux={this.props.flux} />
           </Nav>
         </Navbar>
-        <Tray />
+        <Tray {...this.props} />
         <div id={this.props.contentsDialog}></div>   
       </div>
     );

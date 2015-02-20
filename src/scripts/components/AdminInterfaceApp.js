@@ -33,11 +33,14 @@ var AdminInterfaceApp = React.createClass({
          visible: !this.state.visible
       });
   },
+  randy: function(event){
+     console.log( event );
+  },
   render: function() {
     // disable the navbar if we no longer wish to display it!
     return (
        <div>
-          {this.state.visible && <ToolBar flux={flux} />}
+          {this.state.visible && <ToolBar flux={flux} toggleVisibleEvnt={this.toggle} />}
           <a href="#" onClick={this.toggle}>{this.props.toggleLabel}</a>
        </div>
     );

@@ -5,7 +5,7 @@ describe('Reports', function () {
   var Reports, component;
 
   beforeEach(function () {
-    Reports = require('../../../src/scripts/components/Reports.js');
+    Reports = require('../../../../src/scripts/components/Reports/Menu.js');
     component = React.createElement(Reports);
   });
 
