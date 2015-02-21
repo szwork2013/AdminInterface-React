@@ -1,11 +1,10 @@
 # AdminInterface-React
 Administrative Interface based on React
 
-
+<pre>
 Quick Install?
 
 1.  Install Node.js (http://nodejs.org/)
-
 
 2.  Install supporting loaders 
 
@@ -26,4 +25,4 @@ npm will install the required packages
 6.  grunt serve
 
 This last step will display the current menu I am working on.
-
+</pre>
