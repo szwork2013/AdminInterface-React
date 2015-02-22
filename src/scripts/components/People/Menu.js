@@ -1,30 +1,25 @@
 'use strict';
 
 var React = require('react/addons');
+var ModalTrigger = require('react-bootstrap/ModalTrigger');
 var NavItem = require('react-bootstrap/NavItem');
-var Jumbotron = require('react-bootstrap/Jumbotron');
+
+var ContentPanel = require('./Panel');
 
 require('../../../styles/People/Menu.less');
 
 var Menu = React.createClass({
   propTypes: {
-    contentsDialog: React.PropTypes.string.isRequired
+     flux: React.PropTypes.object.isRequired, // This needs to be an instance of ...Fluxxor.Flux(...
+     contentsDialog: React.PropTypes.string.isRequired
   },
   render: function () {
-    return (     
-      <NavItem onClick={this.handleClick}>
-        {this.props.label}
-      </NavItem>
+    return (
+      <ModalTrigger modal={<ContentPanel {...this.props} />}>
+         <NavItem>{this.props.label}</NavItem>
+      </ModalTrigger>
     );
-  },
-  handleClick: function(index){
-    var jumbotron = (
-      <Jumbotron>
-        <h1>Manage user accounts, groups and permissions.</h1>
-      </Jumbotron>        
-    );
-    React.render(jumbotron, document.getElementById(this.props.contentsDialog));
-  }  
+  }
 });
 
 module.exports = Menu; 

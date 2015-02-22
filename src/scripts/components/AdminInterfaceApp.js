@@ -13,8 +13,19 @@ var ToolBar = require('./ToolBar');
 
 // Flux implementation, see:  https://facebook.github.io/flux/  and http://fluxxor.com
 var ContentStore = require('./Content/Store');
+var SessionStore = require('./People/Store');
 var Fluxxor = require("fluxxor");
-var flux = new Fluxxor.Flux({ ContentStore: new ContentStore() }, {});
+
+var actions = {
+  getSessions: function() {
+    this.dispatch("GET_SESSIONS", {});
+  }
+};
+
+var flux = new Fluxxor.Flux({
+  ContentStore: new ContentStore(),
+  SessionStore: new SessionStore(),  
+}, actions );
 //flux.on("dispatch", function(type, payload) {
 //  if (console && console.log) {
 //    console.log("[Dispatch]", type, payload);

@@ -32,6 +32,7 @@ node_modules/
 .tmp
 dist
 /src/scripts/main.js
+/src/mock
 
 .editorconfig
 .jshintrc
