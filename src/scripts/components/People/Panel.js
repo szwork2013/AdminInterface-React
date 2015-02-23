@@ -34,7 +34,7 @@ var Panel = React.createClass({
     return (
       <Modal id="wgp-content-panel" title={this.props.label} {...this.props}> 
         <div className="modal-body">
-          <TabbedArea defaultActiveKey={1} onSelect={this.handleSelect}>
+          <TabbedArea activeKey={0} onSelect={this.handleSelect}>
             {this.state.menus.map(function(menu,index){
                 return (
                   <TabPane key={menu.key} eventKey={menu.key} tab={menu.value}>
@@ -52,9 +52,9 @@ var Panel = React.createClass({
   },
   handleSelect: function(selectedKey) {
     if (this.state.menus[selectedKey].value === 'Sessions') {
-       this.props.flux.actions.getSessions();
+       //this.props.flux.actions.getSessions();
     }
-    this.setState({ date: (new Date()).getTime() });
+    console.log("Clicked: " + selectedKey);
   }  
 });
 

@@ -23,7 +23,6 @@ var Store = Fluxxor.createStore({
   },
   getState: function() {
     return {
-      date: "",
       menus: this.menus,
       sessions: this.sessions
     };
@@ -34,14 +33,14 @@ var Store = Fluxxor.createStore({
       dataType: 'json',
       success: function(response) {
         console.log(response.data);
-        //this.sessions = response.data;
+        //this.sessions = response.data;    
+    this.emit("change");
       }.bind(this),
       error: function(xhr, status, err) {
         console.error('/mock/opActiveSessions.json', status, err.toString());
       }.bind(this)
     });
-    
-    this.emit("change");
+
   }
 });
 
