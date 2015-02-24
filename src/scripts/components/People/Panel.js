@@ -31,17 +31,20 @@ var Panel = React.createClass({
     return flux.store("SessionStore").getState();
   },  
   render: function() {
+    var tabs = this.state.menus.map(
+      function(menu,index){
+        return (
+          <TabPane key={menu.key} eventKey={menu.key} tab={menu.value}>
+              {menu.title}
+           </TabPane>
+        );
+      }
+    );
     return (
       <Modal id="wgp-content-panel" title={this.props.label} {...this.props}> 
         <div className="modal-body">
           <TabbedArea activeKey={0} onSelect={this.handleSelect}>
-            {this.state.menus.map(function(menu,index){
-                return (
-                  <TabPane key={menu.key} eventKey={menu.key} tab={menu.value}>
-                      {menu.title}
-                  </TabPane>
-                );
-            })}
+            {tabs}
           </TabbedArea>
         </div>
         <div className="modal-footer">

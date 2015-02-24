@@ -24,7 +24,9 @@ var Tray = React.createClass({
           <NavItem>Find Content</NavItem>
         </Nav>
         <Nav className="right">
-          <NavItem onClick={this.props.toggleVisibleEvnt}>Turn Admin Off</NavItem>
+          <NavItem onClick={this.props.toggleVisibleEvnt}>
+             Turn Admin Off
+          </NavItem>
         </Nav>
       </Navbar>
       );
