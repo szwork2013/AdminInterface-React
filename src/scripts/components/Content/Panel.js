@@ -6,12 +6,26 @@ var Modal = require('react-bootstrap/Modal');
 var TabbedArea = require('react-bootstrap/TabbedArea');
 var TabPane = require('react-bootstrap/TabPane');
 
-// Flux implementation, see:  https://facebook.github.io/flux/  and http://fluxxor.com
+//var FixedDataTable = require('fixed-data-table');
+//var Table = FixedDataTable.Table;
+//var Column = FixedDataTable.Column;
+
+// Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 require('../../../styles/Content/Panel.less');
+
+var rows = [
+      ['a1', 'b1', 'c1'],
+      ['a2', 'b3', 'c2'],
+      ['a3', 'b3', 'c3']
+    ];  
+var rowGetter = function(rowIndex) {
+       return rows[rowIndex];
+    };
+
 
 var Panel = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("ContentStore")],
@@ -31,15 +45,21 @@ var Panel = React.createClass({
     return flux.store("ContentStore").getState();
   },  
   render: function() {
+    var tabs = this.state.menus.map(
+      function(menu,index){
+        return (
+          <TabPane key={menu.key} eventKey={menu.key} tab={menu.value}>
+            {menu.title}
+          </TabPane>
+        );
+      }
+    );
+    
     return (
       <Modal id="wgp-content-panel" title={this.props.label} {...this.props}> 
         <div className="modal-body">
           <TabbedArea defaultActiveKey={1}>
-            {this.state.menus.map(function(menu,index){
-                return (
-                  <TabPane key={menu.key} eventKey={menu.key} tab={menu.value}>{menu.title}</TabPane>
-                );
-            })}
+            {tabs}
           </TabbedArea>
         </div>
         <div className="modal-footer">
