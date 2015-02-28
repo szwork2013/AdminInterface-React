@@ -36,14 +36,23 @@ var Panel = React.createClass({
     return flux.store("ContentStore").getState();
   },  
   render: function() {  
-    var tabs = this.state.menus.map(
-      function(menu,index){     
+    var tabs = this.state.data.map(
+      function(tab,index){     
         return (
-          <TabPane key={menu.key} eventKey={menu.key} tab={menu.title}>            
-            <Table rowGetter={function(rowIndex){return menu.data[rowIndex];}}
-                rowsCount={menu.data.length} width={500} height={500} headerHeight={40} rowHeight={40}>
-              <Column label="Col 1" width={100} dataKey={0} />
-              <Column label="Col 2" width={100} dataKey={1} />
+          <TabPane key={tab.key} eventKey={tab.key} tab={tab.title}>
+            <br />
+            <Table rowGetter={function(rowIndex){return tab.data[rowIndex];}}
+                rowsCount={tab.data.length} width={500} height={500} headerHeight={40} rowHeight={40}>
+                
+                {tab.data.map(
+                   function(cellRow, columnIndex){
+                      //cellRow[columnIndex].length
+                      return (
+                        <Column key={columnIndex} label={tab.columns[columnIndex]} width={300} dataKey={columnIndex} />
+                      );
+                   }
+                )}
+                
             </Table>  
           </TabPane>
         );
