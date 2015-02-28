@@ -5,8 +5,18 @@ var Fluxxor = require("fluxxor");
 var Store = Fluxxor.createStore({
   initialize: function() {
     this.menus = [
-       { key:1, value:"Add content", title:"Add New Contents" },
-       { key:2, value:"Find content", title:"Find Contents" }    
+      { key:1, title:"Add content",
+      data:[
+        ["one","two","three"],
+        ["one2","two2","three2"],
+        ["one3","two3","three3"]           
+      ]},
+      { key:2, title:"Find content",
+      data:[
+        ["oneI","twoI","threeI"],
+        ["oneI2","twoI2","threeI2"],
+        ["oneI3","twoI3","threeI3"]           
+      ]}          
     ];
 
   },

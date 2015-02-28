@@ -6,9 +6,10 @@ var Modal = require('react-bootstrap/Modal');
 var TabbedArea = require('react-bootstrap/TabbedArea');
 var TabPane = require('react-bootstrap/TabPane');
 
-//var FixedDataTable = require('fixed-data-table');
-//var Table = FixedDataTable.Table;
-//var Column = FixedDataTable.Column;
+// We need a ES6 compatible Object.assign polyfill otherwise unsupported browsers will complain
+Object.assign = Object.assign || require('object-assign');
+var Table = require('fixed-data-table').Table;
+var Column = require('fixed-data-table').Column;
 
 // Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
@@ -16,16 +17,6 @@ var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 require('../../../styles/Content/Panel.less');
-
-var rows = [
-      ['a1', 'b1', 'c1'],
-      ['a2', 'b3', 'c2'],
-      ['a3', 'b3', 'c3']
-    ];  
-var rowGetter = function(rowIndex) {
-       return rows[rowIndex];
-    };
-
 
 var Panel = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("ContentStore")],
@@ -44,12 +35,16 @@ var Panel = React.createClass({
     //   };
     return flux.store("ContentStore").getState();
   },  
-  render: function() {
+  render: function() {  
     var tabs = this.state.menus.map(
-      function(menu,index){
+      function(menu,index){     
         return (
-          <TabPane key={menu.key} eventKey={menu.key} tab={menu.value}>
-            {menu.title}
+          <TabPane key={menu.key} eventKey={menu.key} tab={menu.title}>            
+            <Table rowGetter={function(rowIndex){return menu.data[rowIndex];}}
+                rowsCount={menu.data.length} width={500} height={500} headerHeight={40} rowHeight={40}>
+              <Column label="Col 1" width={100} dataKey={0} />
+              <Column label="Col 2" width={100} dataKey={1} />
+            </Table>  
           </TabPane>
         );
       }

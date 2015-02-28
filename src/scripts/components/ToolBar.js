@@ -8,6 +8,9 @@ var NavItem = require('react-bootstrap/NavItem');
 var Jumbotron = require('react-bootstrap/Jumbotron');
 require('../../styles/ToolBar.less');
 
+// Fixed data tables (Facebook) requirement:  http://facebook.github.io/fixed-data-table/
+require('../../styles/fixed-data-table.css');
+
 // sub modules
 var Content = require('./Content/Menu');
 var Appearance = require('./Appearance/Menu');
