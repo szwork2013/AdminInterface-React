@@ -1,14 +1,11 @@
 'use strict';
 
 var React = require('react/addons');
-var Modal = require('react-bootstrap/Modal');
 var TabbedArea = require('react-bootstrap/TabbedArea');
 var TabPane = require('react-bootstrap/TabPane');
 
-// We need a ES6 compatible Object.assign polyfill otherwise unsupported browsers will complain
-Object.assign = Object.assign || require('object-assign');
-var Table = require('fixed-data-table').Table;
-var Column = require('fixed-data-table').Column;
+var AddContent = require('./AddContent');
+var FindContent = require('./FindContent');
 
 // Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
@@ -20,7 +17,7 @@ require('../../../styles/Content/Tabs.less');
 var Tabs = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("ContentStore")],
   propTypes: {
-     flux: React.PropTypes.object.isRequired
+    flux: React.PropTypes.object.isRequired
   },
   getStateFromFlux: function() {
     var flux = this.getFlux();
@@ -35,31 +32,22 @@ var Tabs = React.createClass({
     return flux.store("ContentStore").getState();
   },
   render: function () {
-    var tabs = this.state.data.map(
-      function(tab,index){     
-        return (
-          <TabPane key={tab.key} eventKey={tab.key} tab={tab.title}>
-            <br />
-            <Table rowGetter={function(rowIndex){return tab.data[rowIndex];}}
-                rowsCount={tab.data.length} width={500} height={500} headerHeight={40} rowHeight={40}>
-                
-              {tab.data.map(
-                 function(cellRow, columnIndex){
-                    return (
-                      <Column key={columnIndex} label={tab.columns[columnIndex]} width={300} dataKey={columnIndex} />
-                    );
-                 }
-              )}
-                
-            </Table>  
-          </TabPane>
-        );
-      }
-    );
-
+    var addContentTab = this.state.data[0];
+    var findContentTab = this.state.data[1];
+    
     return (
-      <TabbedArea defaultActiveKey={1}>
-         {tabs}
+      <TabbedArea defaultActiveKey={0}>
+      
+        <TabPane key={0} eventKey={0} tab={addContentTab.title}>
+          <br />
+          <AddContent tabContents={addContentTab} />
+        </TabPane> 
+        
+        <TabPane key={1} eventKey={1} tab={findContentTab.title}>
+          <br />
+          <FindContent />
+        </TabPane>
+        
       </TabbedArea>
     );
   }
