@@ -5,32 +5,11 @@ var React = require('react/addons');
 // Export React so the devtools can find it
 (window !== window.top ? window.top : window).React = React;
 
-// Import CSS files
-require('../../styles/main.css');
-
 // Modules
 var ToolBar = require('./ToolBar');
 
-// Flux implementation, see:  https://facebook.github.io/flux/  and http://fluxxor.com
-var ContentStore = require('./Content/Store');
-var SessionStore = require('./People/Store');
-var Fluxxor = require("fluxxor");
-
-var actions = {
-  getSessions: function() {
-    this.dispatch("GET_SESSIONS", {});
-  }
-};
-
-var flux = new Fluxxor.Flux({
-  ContentStore: new ContentStore(),
-  SessionStore: new SessionStore(),  
-}, actions );
-//flux.on("dispatch", function(type, payload) {
-//  if (console && console.log) {
-//    console.log("[Dispatch]", type, payload);
-//  }
-//});
+// Import CSS files
+require('../../styles/main.css');
 
 var AdminInterfaceApp = React.createClass({
   propTypes: {
@@ -44,14 +23,11 @@ var AdminInterfaceApp = React.createClass({
          visible: !this.state.visible
       });
   },
-  randy: function(event){
-     console.log( event );
-  },
   render: function() {
     // disable the navbar if we no longer wish to display it!
     return (
        <div>
-          {this.state.visible && <ToolBar flux={flux} toggleVisibleEvnt={this.toggle} />}
+          {this.state.visible && <ToolBar toggleVisibleEvnt={this.toggle} />}
           <a href="#" onClick={this.toggle}>{this.props.toggleLabel}</a>
        </div>
     );

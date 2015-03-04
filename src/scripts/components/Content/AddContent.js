@@ -18,7 +18,7 @@ var AddContent = React.createClass({
     var data = this.props.tabContents.data;
     return (
       <Table rowGetter={function(rowIndex){return data[rowIndex];}}
-          rowsCount={data.length} width={500} height={500} headerHeight={40} rowHeight={40}>
+          rowsCount={data.length} width={900} height={500} headerHeight={40} rowHeight={40}>
           
         {data.map(
           function(cellRow, columnIndex){

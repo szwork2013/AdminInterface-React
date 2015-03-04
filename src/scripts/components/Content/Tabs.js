@@ -38,12 +38,12 @@ var Tabs = React.createClass({
     return (
       <TabbedArea defaultActiveKey={0}>
       
-        <TabPane key={0} eventKey={0} tab={addContentTab.title}>
+        <TabPane eventKey={0} tab={addContentTab.title}>
           <br />
           <AddContent tabContents={addContentTab} />
         </TabPane> 
         
-        <TabPane key={1} eventKey={1} tab={findContentTab.title}>
+        <TabPane eventKey={1} tab={findContentTab.title}>
           <br />
           <FindContent />
         </TabPane>
