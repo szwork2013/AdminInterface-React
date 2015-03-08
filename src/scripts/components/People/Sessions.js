@@ -39,12 +39,12 @@ var Sessions = React.createClass({
     return (
       <Table rowsCount={data.length} width={1070} height={500} headerHeight={40} rowHeight={40}
         rowGetter={function(rowIndex){return data[rowIndex];}}>
-        <Column label="Username" width={200} dataKey="username" />
-        <Column label="User Id" width={230} dataKey="userId" />
-        <Column label="Session Id" width={230} dataKey="sessionId" />
-        <Column label="IP Address" width={90} dataKey="lastIP" />
+        <Column label="Username"    width={200} dataKey="username" />
+        <Column label="User Id"     width={220} dataKey="userId" />
+        <Column label="Session Id"  width={220} dataKey="sessionId" />
+        <Column label="IP Address"  width={125} dataKey="lastIP" />
         <Column label="Last Viewed" width={160} dataKey="lastPageView" />
-        <Column label="Expires" width={160} dataKey="expires" />
+        <Column label="Expires"     width={160} dataKey="expires" />
       </Table>
     );
   },

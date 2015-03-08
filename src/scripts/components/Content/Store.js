@@ -8,7 +8,7 @@ var Store = Fluxxor.createStore({
       { title:"Add content",
         headers:[ "First", "Second", "Third" ],      
         data:[
-          ['<a href="http://www.yahoo.com">Yahoo</a>',"two","three"],
+          [{"href":"http://www.yahoo.com", "link":"Yahoo"},"two","three"],
           ["one2","two2","three2"],
           ["one3","two3","three3"]           
         ]
