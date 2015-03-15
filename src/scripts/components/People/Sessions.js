@@ -2,6 +2,8 @@
 
 var React = require('react/addons');
 
+var _sessionSource = '/mock/opActiveSessions.json';
+
 // We need a ES6 compatible Object.assign polyfill otherwise unsupported browsers will complain
 Object.assign = Object.assign || require('object-assign');
 var Table = require('fixed-data-table').Table;
@@ -46,10 +48,12 @@ var Sessions = React.createClass({
     var data = this.state.sessions;
     
     return (
-      <div>
-        <Button bsStyle="danger" style={{float:"right"}} onClick={this.killSelectedSessions}>Kill Selected</Button>
-        <Input type="checkbox" label="All" onClick={this.checkall} id="wgp-people-sessions-checkbox-all" style={{float:"right"}} />
-        <Table rowsCount={data.length} width={1070} height={500} headerHeight={40} rowHeight={40}
+      <div id="Sessions">   <Input type="checkbox" label="All" onClick={this.checkall} id="wgp-people-sessions-checkbox-all" />
+        <div className="wgp-people-session-controls">
+          <Button bsStyle="danger" bsSize="xsmall" style={{float:"right"}} onClick={this.killSelectedSessions}>Kill Selected</Button>
+          
+        </div>
+        <Table rowsCount={data.length} width={1070} height={500} headerHeight={40} rowHeight={40} overflowX="hidden"
           rowGetter={function(rowIndex){return data[rowIndex];}}>
           <Column label="Username"    width={250} dataKey="username" />
           <Column label="User Id"     width={250} dataKey="userId" />
@@ -68,10 +72,20 @@ var Sessions = React.createClass({
     });
   },
   getSessionData: function(){
-    this.props.flux.actions.getSessions('/mock/opActiveSessions.json');    
+    this.props.flux.actions.getSessions( _sessionSource );    
   },
   killSelectedSessions:function(){
-    console.log("Kill selected sessions!");
+    var sid = "";
+    $(".wgp-people-sessions-checkbox").each(function(){
+      if ( $(this).is(':checked') ){
+         sid += $(this).attr('value') + ',';
+      }
+    });
+    
+    if ( sid.length > 10 ){ // most webgui session ids are greater than 10 characters
+      this.props.flux.actions.killSessions( sid );
+    }
+    
   }
 });
 

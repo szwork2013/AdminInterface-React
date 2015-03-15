@@ -6,7 +6,8 @@ var Store = Fluxxor.createStore({
   initialize: function() {
     this.sessions = [];
     this.bindActions(
-      "GET_SESSIONS", this.getSessions
+      "GET_SESSIONS", this.getSessions,
+      "KILL_SESSIONS", this.killSessions
     );
   },
   getState: function() {
@@ -30,7 +31,29 @@ var Store = Fluxxor.createStore({
       }.bind(this)
     });
 
+  },
+  killSessions:function(payload){
+    console.log(payload.sid);
+    this.emit("change");
+    
+    //if ( sid.length > 10 ){
+    //  $( "#dialog-delete-confirm" ).dialog({
+    //     modal: true,
+    //     buttons: {
+    //        "Delete all items":function(){
+    //           var jsonPath = Prime.config().jsonSourceServer + '?op=killSession&sid=' + sid;
+    //           AjaxHelper({ jsonPath: jsonPath, logMessage:'Deleted', callback:function(){ sessionsDatatable.fnDraw(); } });
+    //           $( this ).dialog( "close" );
+    //        },
+    //        Cancel: function() {
+    //           $( this ).dialog( "close" );
+    //        }
+    //     }
+    //  });
+    //}
+    
   }
+  
 });
 
 module.exports = Store; 

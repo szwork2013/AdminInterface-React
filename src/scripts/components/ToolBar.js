@@ -27,7 +27,11 @@ var Fluxxor = require("fluxxor");
 var actions = {
   getSessions: function(url) {
     this.dispatch("GET_SESSIONS", { url: url });
+  },
+  killSessions: function(sid){
+    this.dispatch("KILL_SESSIONS", { sid: sid });
   }
+  
 };
 
 var flux = new Fluxxor.Flux({
@@ -50,34 +54,22 @@ var ToolBar = React.createClass({
       contentsDialog: 'wgp-contents-dialog'
     };
   },
-  getMenus: function(){
-    return [
-        { link:"#",label:"Content" },
-        { link:"#",label:"Appearance" },
-        { link:"#",label:"People" },
-        { link:"#",label:"Modules" },
-        { link:"#",label:"Settings" },         
-        { link:"#",label:"Reports" },
-        { link:"#",label:"Help" }
-    ];
-  },
   render: function () {
     var cssClasses = cx({
       'navbar-static-top' : true,
       'navbar-inverse' : true
     });      
-    var menus = this.getMenus();
     return (
       <div className="-wgp-fixed-top">
         <Navbar id="ToolBar" className={cssClasses}>
           <Nav style={{ float: "left" }}>
-             <Content index={0} link={menus[0].link} label={menus[0].label} {...this.props} flux={flux} /> 
-             <Appearance index={1} link={menus[1].link} label={menus[1].label} {...this.props} flux={flux} />
-             <People index={2} link={menus[2].link} label={menus[2].label} {...this.props} flux={flux} />
-             <Modules index={3} link={menus[3].link} label={menus[3].label} {...this.props} flux={flux} />
-             <Settings index={4} link={menus[4].link} label={menus[4].label} {...this.props} flux={flux} />
-             <Reports index={5} link={menus[5].link} label={menus[5].label} {...this.props} flux={flux} />
-             <Help index={6} link={menus[6].link} label={menus[6].label} {...this.props} flux={flux} />
+             <Content     index={0} label="Content" {...this.props} flux={flux} /> 
+             <Appearance  index={1} label="Appearance" {...this.props} flux={flux} />
+             <People      index={2} label="People" {...this.props} flux={flux} />
+             <Modules     index={3} label="Modules" {...this.props} flux={flux} />
+             <Settings    index={4} label="Settings" {...this.props} flux={flux} />
+             <Reports     index={5} label="Reports" {...this.props} flux={flux} />
+             <Help        index={6} label="Help" {...this.props} flux={flux} />
           </Nav>
         </Navbar>
         <Tray {...this.props} />
