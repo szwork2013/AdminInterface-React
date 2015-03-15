@@ -6,13 +6,21 @@ var React = require('react/addons');
 Object.assign = Object.assign || require('object-assign');
 var Table = require('fixed-data-table').Table;
 var Column = require('fixed-data-table').Column;
-
+// Bootstrap components
+var Button = require('react-bootstrap').Button;
+var Input = require('react-bootstrap').Input;
 
 // Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
-
+    
+function checkBox(data){
+  return (
+    <input type="checkbox" value={data} className="wgp-people-sessions-checkbox" />
+  );
+}
+    
 require('../../../styles/People/Sessions.less');
 var Sessions = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SessionStore")],
@@ -34,22 +42,36 @@ var Sessions = React.createClass({
   componentWillMount: function(){
      this.getSessionData();
   },
-  render: function () {
+  render: function () {    
     var data = this.state.sessions;
+    
     return (
-      <Table rowsCount={data.length} width={1070} height={500} headerHeight={40} rowHeight={40}
-        rowGetter={function(rowIndex){return data[rowIndex];}}>
-        <Column label="Username"    width={200} dataKey="username" />
-        <Column label="User Id"     width={220} dataKey="userId" />
-        <Column label="Session Id"  width={220} dataKey="sessionId" />
-        <Column label="IP Address"  width={125} dataKey="lastIP" />
-        <Column label="Last Viewed" width={160} dataKey="lastPageView" />
-        <Column label="Expires"     width={160} dataKey="expires" />
-      </Table>
+      <div>
+        <Button bsStyle="danger" style={{float:"right"}} onClick={this.killSelectedSessions}>Kill Selected</Button>
+        <Input type="checkbox" label="All" onClick={this.checkall} id="wgp-people-sessions-checkbox-all" style={{float:"right"}} />
+        <Table rowsCount={data.length} width={1070} height={500} headerHeight={40} rowHeight={40}
+          rowGetter={function(rowIndex){return data[rowIndex];}}>
+          <Column label="Username"    width={250} dataKey="username" />
+          <Column label="User Id"     width={250} dataKey="userId" />
+          <Column label="IP Address"  width={200} dataKey="lastIP" />
+          <Column label="Last Viewed" width={160} dataKey="lastPageView" />
+          <Column label="Expires"     width={160} dataKey="expires" />
+          <Column label="Kill"        width={50}  dataKey="sessionId" cellRenderer={checkBox} align="center" />
+        </Table>
+      </div>
     );
+  },
+  checkall:function(){
+    var checked = $("#wgp-people-sessions-checkbox-all").is(':checked');    
+    $(".wgp-people-sessions-checkbox").each(function(){
+      $(this).prop('checked', checked);
+    });
   },
   getSessionData: function(){
     this.props.flux.actions.getSessions('/mock/opActiveSessions.json');    
+  },
+  killSelectedSessions:function(){
+    console.log("Kill selected sessions!");
   }
 });
 
