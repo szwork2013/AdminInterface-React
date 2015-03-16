@@ -2,15 +2,18 @@
 
 var React = require('react/addons');
 
-var _sessionSource = '/mock/opActiveSessions.json';
+
 
 // We need a ES6 compatible Object.assign polyfill otherwise unsupported browsers will complain
 Object.assign = Object.assign || require('object-assign');
 var Table = require('fixed-data-table').Table;
 var Column = require('fixed-data-table').Column;
+
 // Bootstrap components
 var Button = require('react-bootstrap').Button;
 var Input = require('react-bootstrap').Input;
+var Row = require('react-bootstrap').Row;
+var Col = require('react-bootstrap').Col;
 
 // Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
@@ -48,19 +51,20 @@ var Sessions = React.createClass({
     var data = this.state.sessions;
     
     return (
-      <div id="Sessions">   <Input type="checkbox" label="All" onClick={this.checkall} id="wgp-people-sessions-checkbox-all" />
-        <div className="wgp-people-session-controls">
-          <Button bsStyle="danger" bsSize="xsmall" style={{float:"right"}} onClick={this.killSelectedSessions}>Kill Selected</Button>
-          
+      <div id="Sessions">   
+        <div className="wgp-people-session-controls" wrapperClassName="wrapper">
+          <Button id="wgp-people-sessions-button-killSessions" bsStyle="danger" bsSize="xsmall" onClick={this.killSelectedSessions}>Kill Selected</Button>
+          <input type="checkbox" onClick={this.checkall} id="wgp-people-sessions-checkbox-all" />
+          <label>Select All</label>
         </div>
-        <Table rowsCount={data.length} width={1070} height={500} headerHeight={40} rowHeight={40} overflowX="hidden"
+        <Table rowsCount={data.length} width={1090} height={500} headerHeight={40} rowHeight={40} overflowX="hidden"
           rowGetter={function(rowIndex){return data[rowIndex];}}>
           <Column label="Username"    width={250} dataKey="username" />
           <Column label="User Id"     width={250} dataKey="userId" />
           <Column label="IP Address"  width={200} dataKey="lastIP" />
-          <Column label="Last Viewed" width={160} dataKey="lastPageView" />
-          <Column label="Expires"     width={160} dataKey="expires" />
-          <Column label="Kill"        width={50}  dataKey="sessionId" cellRenderer={checkBox} align="center" />
+          <Column label="Last Viewed" width={165} dataKey="lastPageView" />
+          <Column label="Expires"     width={165} dataKey="expires" />
+          <Column label="Kill"        width={60}  dataKey="sessionId" cellRenderer={checkBox} align="center" />
         </Table>
       </div>
     );
@@ -72,7 +76,7 @@ var Sessions = React.createClass({
     });
   },
   getSessionData: function(){
-    this.props.flux.actions.getSessions( _sessionSource );    
+    this.props.flux.actions.getSessions();    
   },
   killSelectedSessions:function(){
     var sid = "";

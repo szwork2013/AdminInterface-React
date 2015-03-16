@@ -25,8 +25,8 @@ var Fluxxor = require("fluxxor");
 
 // Setup your actions here.
 var actions = {
-  getSessions: function(url) {
-    this.dispatch("GET_SESSIONS", { url: url });
+  getSessions: function() {
+    this.dispatch("GET_SESSIONS", {});
   },
   killSessions: function(sid){
     this.dispatch("KILL_SESSIONS", { sid: sid });

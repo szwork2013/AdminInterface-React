@@ -1,6 +1,7 @@
 'use strict';
 
 var Fluxxor = require("fluxxor");
+var _sessionSource = '/mock/opActiveSessions.json';
 
 var Store = Fluxxor.createStore({
   initialize: function() {
@@ -15,10 +16,10 @@ var Store = Fluxxor.createStore({
       sessions: this.sessions
     };
   },
-  getSessions: function(payload) {
-    console.info("Called again: " + (new Date()))
+  getSessions: function() {
+    //console.info("Called again: " + (new Date()))
     $.ajax({
-      url: payload.url,
+      url: _sessionSource,
       dataType: 'json',
       success: function(response) {
         this.sessions = response.data;    
@@ -26,15 +27,15 @@ var Store = Fluxxor.createStore({
         
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(payload.url, status, err.toString());
+        console.error(_sessionSource, status, err.toString());
         
       }.bind(this)
     });
 
   },
   killSessions:function(payload){
-    console.log(payload.sid);
-    this.emit("change");
+    //console.log(payload.sid);
+
     
     //if ( sid.length > 10 ){
     //  $( "#dialog-delete-confirm" ).dialog({
@@ -51,6 +52,7 @@ var Store = Fluxxor.createStore({
     //     }
     //  });
     //}
+    this.emit("change");
     
   }
   

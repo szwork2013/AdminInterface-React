@@ -12,7 +12,7 @@ module.exports = {
 
   output: {
     publicPath: '/assets/',
-    path: '../../Perl/Reactjs/public/javascripts/',
+    path: '../../Perl/WebGUI8/www/extras/',
     filename: 'AdminInterface.js'
   },
 
