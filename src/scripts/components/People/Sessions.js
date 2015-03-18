@@ -2,8 +2,6 @@
 
 var React = require('react/addons');
 
-
-
 // We need a ES6 compatible Object.assign polyfill otherwise unsupported browsers will complain
 Object.assign = Object.assign || require('object-assign');
 var Table = require('fixed-data-table').Table;
@@ -20,15 +18,14 @@ var Fluxxor = require("fluxxor");
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
     
-function checkBox(data){
-  return (
-    <input type="checkbox" value={data} className="wgp-people-sessions-checkbox" />
-  );
-}
-    
 require('../../../styles/People/Sessions.less');
 var Sessions = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SessionStore")],
+  getInitialState: function() {
+    return {
+      selected: []
+    }
+  },
   propTypes: {
     flux: React.PropTypes.object.isRequired
   },
@@ -45,7 +42,7 @@ var Sessions = React.createClass({
     return flux.store("SessionStore").getState();
   },
   componentWillMount: function(){
-     this.getSessionData();
+     this._getSessionData();
   },
   render: function () {    
     var data = this.state.sessions;
@@ -53,37 +50,55 @@ var Sessions = React.createClass({
     return (
       <div id="Sessions">   
         <div className="wgp-people-session-controls" wrapperClassName="wrapper">
-          <Button id="wgp-people-sessions-button-killSessions" bsStyle="danger" bsSize="xsmall" onClick={this.killSelectedSessions}>Kill Selected</Button>
-          <input type="checkbox" onClick={this.checkall} id="wgp-people-sessions-checkbox-all" />
+          <Button id="wgp-people-sessions-button-killSessions" bsStyle="danger" bsSize="xsmall" onClick={this._killSelectedSessions}>Kill Selected</Button>
+          <input type="checkbox" onClick={this._toggleAll} id="wgp-people-sessions-checkbox-all" />
           <label>Select All</label>
         </div>
-        <Table rowsCount={data.length} width={1090} height={500} headerHeight={40} rowHeight={40} overflowX="hidden"
-          rowGetter={function(rowIndex){return data[rowIndex];}}>
+        <Table rowsCount={data.length} rowGetter={this._getRowData} onRowClick={this._onRowSelect} width={1090} height={500} headerHeight={40} rowHeight={40} overflowX="hidden">
           <Column label="Username"    width={250} dataKey="username" />
           <Column label="User Id"     width={250} dataKey="userId" />
           <Column label="IP Address"  width={200} dataKey="lastIP" />
           <Column label="Last Viewed" width={165} dataKey="lastPageView" />
           <Column label="Expires"     width={165} dataKey="expires" />
-          <Column label="Kill"        width={60}  dataKey="sessionId" cellRenderer={checkBox} align="center" />
+          <Column label="Kill"        width={60}  dataKey="sessionId" align="center"
+             cellRenderer={(value) => <input type="checkbox" value={value} checked={this.state.selected.indexOf(value) >= 0} onChange={() => {}} />} />
         </Table>
       </div>
     );
   },
-  checkall:function(){
-    var checked = $("#wgp-people-sessions-checkbox-all").is(':checked');    
-    $(".wgp-people-sessions-checkbox").each(function(){
-      $(this).prop('checked', checked);
+  _toggleAll: function(e) {
+    var newSet = [];
+    if (e.target.checked) {
+      this.state.sessions.forEach(function(row){
+        newSet.push( row.sessionId );
+      });
+    }
+    this.setState({
+      selected: newSet
     });
   },
-  getSessionData: function(){
+  _onRowSelect: function(e, index){
+    var selectedSessions = this.state.selected;
+    var value = this.state.sessions[index].sessionId; // current clicked row
+    if ( selectedSessions.indexOf(value) < 0 ) { // does not exist in the list.  CHECKED!
+      selectedSessions.push( value );
+    }else{
+      selectedSessions.splice(selectedSessions.indexOf(value), 1);
+    }
+    this.setState({
+      selected: selectedSessions 
+    });
+  },
+  _getRowData: function(rowIndex){
+    return this.state.sessions[rowIndex];
+  },
+  _getSessionData: function(){
     this.props.flux.actions.getSessions();    
   },
-  killSelectedSessions:function(){
+  _killSelectedSessions:function(){
     var sid = "";
-    $(".wgp-people-sessions-checkbox").each(function(){
-      if ( $(this).is(':checked') ){
-         sid += $(this).attr('value') + ',';
-      }
+    this.state.selected.forEach(function(sessionId){
+      sid += sessionId + ',';
     });
     
     if ( sid.length > 10 ){ // most webgui session ids are greater than 10 characters

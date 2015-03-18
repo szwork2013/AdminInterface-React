@@ -34,7 +34,7 @@ var Store = Fluxxor.createStore({
 
   },
   killSessions:function(payload){
-    //console.log(payload.sid);
+    console.log(payload.sid);
 
     
     //if ( sid.length > 10 ){
