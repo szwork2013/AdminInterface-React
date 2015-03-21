@@ -12,6 +12,8 @@ var Button = require('react-bootstrap').Button;
 var Input = require('react-bootstrap').Input;
 var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
+var Modal = require('react-bootstrap').Modal;
+var OverlayMixin = require('react-bootstrap').OverlayMixin;
 
 // Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
@@ -20,10 +22,12 @@ var FluxMixin = Fluxxor.FluxMixin(React),
     
 require('../../../styles/People/Sessions.less');
 var Sessions = React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin("SessionStore")],
+  mixins: [FluxMixin, StoreWatchMixin("SessionStore"), OverlayMixin],
   getInitialState: function() {
     return {
-      selected: []
+      selected: [],
+      killAlertActive: false,
+      enableCheck: false
     }
   },
   propTypes: {
@@ -46,11 +50,11 @@ var Sessions = React.createClass({
   },
   render: function () {    
     var data = this.state.sessions;
-    
+    var disableKill = {disabled: this.state.selected.length <= 0};
     return (
       <div id="Sessions">   
         <div className="wgp-people-session-controls" wrapperClassName="wrapper">
-          <Button id="wgp-people-sessions-button-killSessions" bsStyle="danger" bsSize="xsmall" onClick={this._killSelectedSessions}>Kill Selected</Button>
+          <Button id="wgp-people-sessions-button-killSessions" {...disableKill} bsStyle="danger" bsSize="xsmall" onClick={this._killSelectedSessions}>Kill Selected</Button>
           <input type="checkbox" onClick={this._toggleAll} id="wgp-people-sessions-checkbox-all" />
           <label>Select All</label>
         </div>
@@ -80,13 +84,14 @@ var Sessions = React.createClass({
   _onRowSelect: function(e, index){
     var selectedSessions = this.state.selected;
     var value = this.state.sessions[index].sessionId; // current clicked row
-    if ( selectedSessions.indexOf(value) < 0 ) { // does not exist in the list.  CHECKED!
+    var index = selectedSessions.indexOf(value);
+    if ( index < 0 ) { // does not exist in the list.  is not CHECKED!
       selectedSessions.push( value );
     }else{
-      selectedSessions.splice(selectedSessions.indexOf(value), 1);
+      selectedSessions.splice(index, 1);
     }
     this.setState({
-      selected: selectedSessions 
+      selected: selectedSessions
     });
   },
   _getRowData: function(rowIndex){
@@ -102,10 +107,36 @@ var Sessions = React.createClass({
     });
     
     if ( sid.length > 10 ){ // most webgui session ids are greater than 10 characters
-      this.props.flux.actions.killSessions( sid );
+      this.setState({
+        killAlertActive: true 
+      });
+      //this.props.flux.actions.killSessions( sid );
     }
     
-  }
+  },
+  _closeKillSessionAlertPanel: function(){
+    this.setState({
+      killAlertActive: false
+    });
+  },
+  // This is called by the `OverlayMixin` when this component
+  // is mounted or updated and the return value is appended to the body.
+  renderOverlay: function () {
+    if (!this.state.killAlertActive) {
+      return <span/>;
+    }
+  
+    return (
+        <Modal bsStyle="primary" title="Modal heading" onRequestHide={this._closeKillSessionAlertPanel}>
+          <div className="modal-body">
+            This modal is controlled by our custom trigger component.
+          </div>
+          <div className="modal-footer">
+            <Button onClick={this._closeKillSessionAlertPanel}>Close</Button>
+          </div>
+        </Modal>
+      );
+  }  
 });
 
 module.exports = Sessions; 

@@ -33,25 +33,12 @@ var Store = Fluxxor.createStore({
     });
 
   },
-  killSessions:function(payload){
-    console.log(payload.sid);
-
-    
-    //if ( sid.length > 10 ){
-    //  $( "#dialog-delete-confirm" ).dialog({
-    //     modal: true,
-    //     buttons: {
-    //        "Delete all items":function(){
+  killSessions: function(payload){
     //           var jsonPath = Prime.config().jsonSourceServer + '?op=killSession&sid=' + sid;
-    //           AjaxHelper({ jsonPath: jsonPath, logMessage:'Deleted', callback:function(){ sessionsDatatable.fnDraw(); } });
-    //           $( this ).dialog( "close" );
-    //        },
-    //        Cancel: function() {
-    //           $( this ).dialog( "close" );
-    //        }
-    //     }
-    //  });
-    //}
+    
+    // refresh the session set
+     
+    this.getSessions();   
     this.emit("change");
     
   }
