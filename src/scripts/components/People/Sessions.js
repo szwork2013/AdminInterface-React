@@ -54,7 +54,7 @@ var Sessions = React.createClass({
     return (
       <div id="Sessions">   
         <div className="wgp-people-session-controls" wrapperClassName="wrapper">
-          <Button id="wgp-people-sessions-button-killSessions" {...disableKill} bsStyle="danger" bsSize="xsmall" onClick={this._killSelectedSessions}>Kill Selected</Button>
+          <Button id="wgp-people-sessions-button-killSessions" {...disableKill} bsStyle="danger" bsSize="xsmall" onClick={this._deleteDialogShow}>Kill Selected</Button>
           <input type="checkbox" onClick={this._toggleAll} id="wgp-people-sessions-checkbox-all" />
           <label>Select All</label>
         </div>
@@ -82,8 +82,8 @@ var Sessions = React.createClass({
     });
   },
   _onRowSelect: function(e, index){
-    var selectedSessions = this.state.selected;
     var value = this.state.sessions[index].sessionId; // current clicked row
+    var selectedSessions = this.state.selected;
     var index = selectedSessions.indexOf(value);
     if ( index < 0 ) { // does not exist in the list.  is not CHECKED!
       selectedSessions.push( value );
@@ -105,19 +105,16 @@ var Sessions = React.createClass({
     this.state.selected.forEach(function(sessionId){
       sid += sessionId + ',';
     });
-    
-    if ( sid.length > 10 ){ // most webgui session ids are greater than 10 characters
-      this.setState({
-        killAlertActive: true 
-      });
-      //this.props.flux.actions.killSessions( sid );
-    }
-    
+    this.props.flux.actions.killSessions( sid ); // kill the selected sessions
+    // do error stuff and hide dialog
+    this._deleteDialogHide();
   },
-  _closeKillSessionAlertPanel: function(){
-    this.setState({
-      killAlertActive: false
-    });
+  _deleteDialogShow: function(){
+    var active = this.state.selected.length > 0;
+    this.setState({ killAlertActive: active });
+  },
+  _deleteDialogHide: function(){
+    this.setState({ killAlertActive: false });       
   },
   // This is called by the `OverlayMixin` when this component
   // is mounted or updated and the return value is appended to the body.
@@ -127,15 +124,16 @@ var Sessions = React.createClass({
     }
   
     return (
-        <Modal bsStyle="primary" title="Modal heading" onRequestHide={this._closeKillSessionAlertPanel}>
-          <div className="modal-body">
-            This modal is controlled by our custom trigger component.
-          </div>
-          <div className="modal-footer">
-            <Button onClick={this._closeKillSessionAlertPanel}>Close</Button>
-          </div>
-        </Modal>
-      );
+      <Modal title="Confirm" bsStyle="primary" onRequestHide={this._deleteDialogHide}>
+        <div className="modal-body">
+          Are you sure you want to kill the selected sessions?
+        </div>
+        <div className="modal-footer">
+          <Button onClick={this._killSelectedSessions} bsStyle="danger">Yes</Button>
+          <Button onClick={this._deleteDialogHide}>Cancel</Button>   
+        </div>
+      </Modal>
+    );
   }  
 });
 

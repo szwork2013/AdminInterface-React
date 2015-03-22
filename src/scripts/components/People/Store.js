@@ -35,9 +35,9 @@ var Store = Fluxxor.createStore({
   },
   killSessions: function(payload){
     //           var jsonPath = Prime.config().jsonSourceServer + '?op=killSession&sid=' + sid;
+console.log( "Killing sessions: " + payload.sid );   
     
-    // refresh the session set
-     
+    // refresh the session set     
     this.getSessions();   
     this.emit("change");
     
