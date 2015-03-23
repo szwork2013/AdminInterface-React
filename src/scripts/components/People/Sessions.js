@@ -8,12 +8,12 @@ var Table = require('fixed-data-table').Table;
 var Column = require('fixed-data-table').Column;
 
 // Bootstrap components
-var Button = require('react-bootstrap').Button;
 var Input = require('react-bootstrap').Input;
 var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
-var Modal = require('react-bootstrap').Modal;
-var OverlayMixin = require('react-bootstrap').OverlayMixin;
+
+// Our components
+var TopTableMenu = require('../menu/TopTableMenu');
 
 // Flux implementation, see:  https://facebook.github.io/flux/ and http://fluxxor.com
 var Fluxxor = require("fluxxor");
@@ -22,12 +22,10 @@ var FluxMixin = Fluxxor.FluxMixin(React),
     
 require('../../../styles/People/Sessions.less');
 var Sessions = React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin("SessionStore"), OverlayMixin],
+  mixins: [FluxMixin, StoreWatchMixin("SessionStore")],
   getInitialState: function() {
     return {
-      selected: [],
-      killAlertActive: false,
-      enableCheck: false
+      selected: []
     }
   },
   propTypes: {
@@ -50,14 +48,13 @@ var Sessions = React.createClass({
   },
   render: function () {    
     var data = this.state.sessions;
-    var disableKill = {disabled: this.state.selected.length <= 0};
     return (
       <div id="Sessions">   
-        <div className="wgp-people-session-controls" wrapperClassName="wrapper">
-          <Button id="wgp-people-sessions-button-killSessions" {...disableKill} bsStyle="danger" bsSize="xsmall" onClick={this._deleteDialogShow}>Kill Selected</Button>
-          <input type="checkbox" onClick={this._toggleAll} id="wgp-people-sessions-checkbox-all" />
-          <label>Select All</label>
-        </div>
+        <TopTableMenu selected={this.state.selected} toggleAll={this._toggleAll} triggerConfirmAction={this._killSelectedSessions}
+          actionButtonTitle="Kill Selected"
+          actionPanelText="Are you sure you want to kill the selected sessions?"
+          actionPanelTitle="Confirm"
+        />
         <Table rowsCount={data.length} rowGetter={this._getRowData} onRowClick={this._onRowSelect} width={1090} height={500} headerHeight={40} rowHeight={40} overflowX="hidden">
           <Column label="Username"    width={250} dataKey="username" />
           <Column label="User Id"     width={250} dataKey="userId" />
@@ -100,41 +97,15 @@ var Sessions = React.createClass({
   _getSessionData: function(){
     this.props.flux.actions.getSessions();    
   },
-  _killSelectedSessions:function(){
+  _killSelectedSessions: function(){
     var sid = "";
     this.state.selected.forEach(function(sessionId){
       sid += sessionId + ',';
     });
     this.props.flux.actions.killSessions( sid ); // kill the selected sessions
     // do error stuff and hide dialog
-    this._deleteDialogHide();
-  },
-  _deleteDialogShow: function(){
-    var active = this.state.selected.length > 0;
-    this.setState({ killAlertActive: active });
-  },
-  _deleteDialogHide: function(){
-    this.setState({ killAlertActive: false });       
-  },
-  // This is called by the `OverlayMixin` when this component
-  // is mounted or updated and the return value is appended to the body.
-  renderOverlay: function () {
-    if (!this.state.killAlertActive) {
-      return <span/>;
-    }
-  
-    return (
-      <Modal title="Confirm" bsStyle="primary" onRequestHide={this._deleteDialogHide}>
-        <div className="modal-body">
-          Are you sure you want to kill the selected sessions?
-        </div>
-        <div className="modal-footer">
-          <Button onClick={this._killSelectedSessions} bsStyle="danger">Yes</Button>
-          <Button onClick={this._deleteDialogHide}>Cancel</Button>   
-        </div>
-      </Modal>
-    );
-  }  
+    this.setState({ selected: [] });
+  }
 });
 
 module.exports = Sessions; 
