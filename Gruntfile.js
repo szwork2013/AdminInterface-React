@@ -6,6 +6,8 @@ var mountFolder = function (connect, dir) {
 
 var webpackDistConfig = require('./webpack.dist.config.js'),
     webpackDevConfig = require('./webpack.config.js');
+    
+var webguiConfig = require('./webgui.config.js');
 
 module.exports = function (grunt) {
   // Let *load-grunt-tasks* require everything
@@ -13,7 +15,7 @@ module.exports = function (grunt) {
 
   // Read configuration from package.json
   var pkgConfig = grunt.file.readJSON('package.json');
-
+  
   grunt.initConfig({
     pkg: pkgConfig,
 
@@ -76,12 +78,7 @@ module.exports = function (grunt) {
 
     copy: {
       dev: {
-        files: [
-          {
-            src: [__dirname + '/node_modules/bootstrap/dist/css/bootstrap.min.css' ],
-            dest: '<%= pkg.src %>/styles/vendor/bootstrap.min.css'
-          }
-        ]
+        files: [ ]
       },
       dist: {
         files: [
@@ -100,7 +97,9 @@ module.exports = function (grunt) {
             dest: '<%= pkg.dist %>/images/'
           }
         ]
-      }
+      },
+      webgui: webguiConfig.copy
+      
     },
 
     clean: {
@@ -112,7 +111,12 @@ module.exports = function (grunt) {
           ]
         }]
       }
+    },
+    
+    replace: {
+       webgui: webguiConfig.replace
     }
+    
   });
 
   grunt.registerTask('serve', function (target) {
@@ -130,6 +134,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['karma']);
 
   grunt.registerTask('build', ['clean', 'copy', 'webpack']);
+  
+  grunt.registerTask('webgui', ['clean', 'webpack', 'replace:webgui', 'copy:webgui']); // should add watch on local WebGUI development port
 
   grunt.registerTask('default', []);
 };

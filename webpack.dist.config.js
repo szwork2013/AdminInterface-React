@@ -12,8 +12,8 @@ module.exports = {
 
   output: {
     publicPath: '/assets/',
-    path: '../../Perl/WebGUI8/www/extras/',
-    filename: 'AdminInterface.js'
+    path: 'dist/assets/',
+    filename: 'main.js'
   },
 
   debug: false,

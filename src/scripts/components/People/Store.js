@@ -1,7 +1,6 @@
 'use strict';
 
 var Fluxxor = require("fluxxor");
-var _sessionSource = '/mock/opActiveSessions.json';
 
 var Store = Fluxxor.createStore({
   initialize: function() {
@@ -17,9 +16,9 @@ var Store = Fluxxor.createStore({
     };
   },
   getSessions: function() {
-    //console.info("Called again: " + (new Date()))
+    var getActiveSessions = "/mock/opActiveSessions.json";
     $.ajax({
-      url: _sessionSource,
+      url: getActiveSessions,
       dataType: 'json',
       success: function(response) {
         this.sessions = response.data;    
@@ -27,19 +26,27 @@ var Store = Fluxxor.createStore({
         
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(_sessionSource, status, err.toString());
+        console.error(getActiveSessions, status, err.toString());
         
       }.bind(this)
     });
 
   },
   killSessions: function(payload){
-    //           var jsonPath = Prime.config().jsonSourceServer + '?op=killSession&sid=' + sid;
-console.log( "Killing sessions: " + payload.sid );   
-    
-    // refresh the session set     
-    this.getSessions();   
-    this.emit("change");
+    var killSessionTarget = "/mock/killActiveSessions.json" + payload.sid;
+    $.ajax({
+      url: killSessionTarget,
+      success: function(response) {
+        // refresh the session set     
+        this.getSessions();   
+        this.emit("change");
+        
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(killSessionTarget, status, err.toString());
+        
+      }.bind(this)
+    });    
     
   }
   

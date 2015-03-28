@@ -59,7 +59,7 @@ var TopTableMenu = React.createClass({
     }
   
     return (
-      <Modal title={this.props.actionPanelTitle} bsStyle="primary" onRequestHide={this._deleteDialogHide}>
+      <Modal title={this.props.actionPanelTitle} bsStyle="danger" onRequestHide={this._deleteDialogHide}>
         <div className="modal-body">
           {this.props.actionPanelText}
         </div>
